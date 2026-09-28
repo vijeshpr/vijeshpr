@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, Variants } from 'framer-motion';
 import { Mail, ChevronRight, Target, MapPin, Phone, Download, Award, Lightbulb } from 'lucide-react';
 import './App.css';
@@ -8,8 +8,8 @@ function App() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+    const handleMouseMove = (event: MouseEvent) => {
+      setMousePos({ x: event.clientX, y: event.clientY });
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
@@ -79,7 +79,7 @@ function App() {
           drag="y"
           dragConstraints={{ top: 0, bottom: 0 }}
           dragElastic={0.4}
-          onDragEnd={(_e, info) => {
+          onDragEnd={(_event, info) => {
             if (info.offset.y > 40) toggleLight();
           }}
           className="flex flex-col items-center cursor-grab active:cursor-grabbing group"
