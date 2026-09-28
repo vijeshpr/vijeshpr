@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vijesh PR — RCU &amp; Risk Operations Professional</title>
+    <meta
+      name="description"
+      content="Vijesh PR — Banking &amp; NBFC professional with 15+ years of experience in RCU field investigation, loan document verification, risk operations and branch operations. Based in Kerala, India."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://vijeshpr.example.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Vijesh PR — RCU & Risk Operations Professional" />
+    <meta
+      property="og:description"
+      content="15+ years in Banking &amp; NBFC Operations across RCU, loan document verification, field investigation and branch operations."
+    />
+    <meta property="og:url" content="https://vijeshpr.example.com/" />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Vijesh PR — RCU & Risk Operations Professional" />
+    <meta
+      name="twitter:description"
+      content="15+ years in Banking &amp; NBFC Operations across RCU, loan document verification, field investigation and branch operations."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!--
+      Runs before React mounts so the correct theme (light/dark) is
+      applied immediately, with no flash of the wrong colors.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+          if (stored === "dark" || (!stored && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
