@@ -65,7 +65,7 @@ function App() {
               <a href="#experience" className="px-6 py-3 bg-teal-500 hover:bg-teal-400 text-slate-900 font-bold rounded-xl transition-all flex items-center gap-2 transform hover:scale-105 hover:shadow-[0_0_20px_rgba(20,184,166,0.4)]">
                 Explore Experience <ChevronRight size={20} />
               </a>
-              <a href="/resume.pdf" download className="px-6 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-500 text-white font-semibold rounded-xl transition-all flex items-center gap-2 transform hover:scale-105">
+              <a href="/resume/Vijesh-PR-Resume.pdf" download className="px-6 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-500 text-white font-semibold rounded-xl transition-all flex items-center gap-2 transform hover:scale-105">
                 Download Resume <Download size={20} />
               </a>
             </motion.div>
@@ -82,9 +82,9 @@ function App() {
               {/* Image Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-tr from-teal-500 to-blue-500 rounded-full blur-2xl opacity-40 animate-pulse"></div>
               
-              {/* Profile Image (Ensure 'profile.jpg' is in your public folder) */}
+              {/* Profile Image */}
               <img 
-                src="/profile.jpg" 
+                src="/images/vijesh-pr.jpg" 
                 alt="Vijesh PR" 
                 className="relative z-10 w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-4 border-slate-700/50 shadow-2xl"
                 onError={(e) => {
