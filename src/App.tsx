@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, Variants } from 'framer-motion';
-import { Mail, ChevronRight, Target, MapPin, Phone, Download, Award, Lightbulb, CheckCircle2, ShieldCheck, Briefcase } from 'lucide-react';
+import { Mail, ChevronRight, MapPin, Phone, Download, Award, Lightbulb, CheckCircle2, ShieldCheck, Briefcase } from 'lucide-react';
 import './App.css';
 
 // Enhanced Typing Effect Component for psychological impact (Primacy Effect)
