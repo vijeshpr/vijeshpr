@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase, GraduationCap, Mail, ChevronRight, ShieldCheck, MapPin, Phone } from 'lucide-react';
+import { Briefcase, Mail, ChevronRight, ShieldCheck, MapPin, Phone } from 'lucide-react';
 
 function App() {
   // Animation settings
