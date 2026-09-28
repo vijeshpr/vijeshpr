@@ -1,15 +1,65 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, Variants } from 'framer-motion';
 import { Mail, ChevronRight, Target, MapPin, Phone, Download, Award, Lightbulb } from 'lucide-react';
 import './App.css';
+
+// Typing Effect Component
+const TypingEffect = ({ words }: { words: string[] }) => {
+  const [index, setIndex] = useState(0);
+  const [subIndex, setSubIndex] = useState(0);
+  const [reverse, setReverse] = useState(false);
+  const [blink, setBlink] = useState(true);
+
+  // Blinking Cursor Effect
+  useEffect(() => {
+    const timeout = setTimeout(() => setBlink((prev) => !prev), 500);
+    return () => clearTimeout(timeout);
+  }, [blink]);
+
+  // Typing Logic
+  useEffect(() => {
+    if (subIndex === words[index].length + 1 && !reverse) {
+      setTimeout(() => setReverse(true), 1500); // Wait before deleting
+      return;
+    }
+
+    if (subIndex === 0 && reverse) {
+      setReverse(false);
+      setIndex((prev) => (prev + 1) % words.length); // Move to next word
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      setSubIndex((prev) => prev + (reverse ? -1 : 1));
+    }, Math.max(reverse ? 50 : 100, Math.random() * 150)); // Typing speed
+
+    return () => clearTimeout(timeout);
+  }, [subIndex, index, reverse, words]);
+
+  return (
+    <span className="font-semibold">
+      {`${words[index].substring(0, subIndex)}${blink ? "|" : " "}`}
+    </span>
+  );
+};
 
 function App() {
   const [isLightOn, setIsLightOn] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
+  // Array of skills/experience for typing effect
+  const skills = [
+    "15+ Years Experience in Banking",
+    "Expert in Debt Recovery",
+    "Team Management & Leadership",
+    "RCU Field Investigation",
+    "Loan Document Verification",
+    "Risk & Credit Operations"
+  ];
+
   useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      setMousePos({ x: event.clientX, y: event.clientY });
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
@@ -35,6 +85,7 @@ function App() {
   return (
     <div className={`min-h-screen font-sans overflow-x-hidden transition-colors duration-1000 ${isLightOn ? 'bg-[#f8fafc] text-slate-900 selection:bg-pink-500 selection:text-white' : 'bg-[#0a0f1a] text-slate-100 selection:bg-blue-500 selection:text-white'}`}>
 
+      {/* Interactive Spotlight Effect */}
       <div
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden md:block"
         style={{
@@ -42,11 +93,12 @@ function App() {
         }}
       />
 
+      {/* Background Floating Particles */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className={`absolute rounded-full ${isLightOn ? 'bg-blue-400/20' : 'bg-white/10'}`}
+            className={`absolute rounded-full ${isLightOn ? 'bg-blue-500/20' : 'bg-white/10'}`}
             style={{
               width: Math.random() * 6 + 2 + 'px',
               height: Math.random() * 6 + 2 + 'px',
@@ -67,6 +119,7 @@ function App() {
         ))}
       </div>
 
+      {/* Pull Chain Light Switch Animation */}
       <div className="fixed top-0 right-8 md:right-16 z-50 flex items-start gap-4">
         <div className={`transform origin-top transition-all duration-1000 flex flex-col items-center ${isLightOn ? 'scale-100 opacity-100' : 'scale-90 opacity-40'}`}>
           <div className="w-1 h-12 bg-slate-700"></div>
@@ -79,7 +132,7 @@ function App() {
           drag="y"
           dragConstraints={{ top: 0, bottom: 0 }}
           dragElastic={0.4}
-          onDragEnd={(_event, info) => {
+          onDragEnd={(_e, info) => {
             if (info.offset.y > 40) toggleLight();
           }}
           className="flex flex-col items-center cursor-grab active:cursor-grabbing group"
@@ -93,20 +146,24 @@ function App() {
         </motion.div>
       </div>
 
+      {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center relative px-6 pt-24 pb-12 z-10">
         <div className={`absolute top-[-10%] left-[-10%] w-96 h-96 rounded-full blur-[120px] transition-opacity duration-1000 ${isLightOn ? 'opacity-0' : 'bg-red-600/10 opacity-100'}`}></div>
         <div className={`absolute bottom-[-10%] right-[-10%] w-96 h-96 rounded-full blur-[120px] transition-opacity duration-1000 ${isLightOn ? 'opacity-0' : 'bg-blue-600/10 opacity-100'}`}></div>
 
         <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+          
+          {/* Text Content */}
           <div className="md:w-1/2 text-center md:text-left">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6 transition-colors duration-1000 ${isLightOn ? 'bg-white border-blue-200 shadow-lg' : 'bg-slate-800/90 border-slate-600 shadow-[0_0_15px_rgba(59,130,246,0.3)]'}`}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6 transition-colors duration-1000 ${isLightOn ? 'bg-white border-blue-200 shadow-lg text-blue-700' : 'bg-slate-800/90 border-slate-600 shadow-[0_0_15px_rgba(59,130,246,0.3)] text-blue-400'}`}
             >
               <Target size={18} className="text-blue-500" />
-              <span className={`text-sm font-semibold tracking-wide ${isLightOn ? 'text-slate-700' : 'text-slate-200'}`}>Targeting: Collection Manager & Team Leader</span>
+              {/* Dynamic Typing Effect Here */}
+              <TypingEffect words={skills} />
             </motion.div>
 
             <motion.h1
@@ -145,6 +202,7 @@ function App() {
             </motion.div>
           </div>
 
+          {/* Profile Photo */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -166,6 +224,7 @@ function App() {
         </div>
       </section>
 
+      {/* Experience Section */}
       <section id="experience" className={`py-24 px-6 relative border-t transition-colors duration-1000 z-10 ${isLightOn ? 'bg-white/50 border-slate-200' : 'bg-slate-900/50 border-slate-800'}`}>
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -253,6 +312,7 @@ function App() {
         </div>
       </section>
 
+      {/* Contact Section */}
       <section id="contact" className="py-32 px-6 relative overflow-hidden z-10">
         <div className="max-w-4xl mx-auto">
           <motion.div
