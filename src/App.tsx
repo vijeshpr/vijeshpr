@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, Variants } from 'framer-motion';
-import { Mail, ChevronRight, Target, MapPin, Phone, Download, Award, ShieldCheck, Briefcase, Lightbulb } from 'lucide-react';
+import { Mail, ChevronRight, Target, MapPin, Phone, Download, Award, Lightbulb } from 'lucide-react';
 import './App.css'; 
 
 function App() {
