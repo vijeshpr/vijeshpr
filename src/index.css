@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --nav-height: 76px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased transition-colors duration-300;
+}
+
+.dark body {
+  @apply bg-night text-paper;
+}
+
+section[id] {
+  scroll-margin-top: var(--nav-height);
+}
+
+::selection {
+  background-color: #2f6f5e;
+  color: #f2f1ea;
+}
+
+.dark ::selection {
+  background-color: #5fae93;
+  color: #0b1220;
+}
+
+*:focus-visible {
+  outline: 2px solid #2f6f5e;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Restrained, single-purpose scroll reveal — applied per section, not per card */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Ledger-style ruled background used behind the hero */
+.ledger-lines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 35px,
+    rgba(18, 35, 61, 0.055) 36px
+  );
+}
+
+.dark .ledger-lines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 35px,
+    rgba(242, 241, 234, 0.05) 36px
+  );
+}
+
+/* One orchestrated entrance for the hero on first load — not repeated
+   per-card elsewhere on the page. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-in {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-in {
+    animation: none;
+  }
+}
