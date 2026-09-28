@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, Variants } from 'framer-motion';
 import { Mail, ChevronRight, Target, MapPin, Phone, Download, Award, Lightbulb } from 'lucide-react';
 import './App.css';
@@ -312,7 +312,6 @@ function App() {
         </div>
       </section>
 
-      {/* Contact Section */}
       <section id="contact" className="py-32 px-6 relative overflow-hidden z-10">
         <div className="max-w-4xl mx-auto">
           <motion.div
