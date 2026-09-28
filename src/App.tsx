@@ -1,6 +1,6 @@
 import { motion, Variants } from 'framer-motion';
 import { Briefcase, Mail, ChevronRight, Target, MapPin, Phone, Download, Award } from 'lucide-react';
-import './App.css'; // Importing CSS for RGB Animation
+import './App.css'; 
 
 function App() {
   const fadeInUp: Variants = {
