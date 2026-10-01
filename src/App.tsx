@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { motion, Variants } from 'framer-motion';
-import { Mail, ChevronRight, MapPin, Phone, Download, Award, Lightbulb, CheckCircle2, ShieldCheck, Briefcase } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, Variants, AnimatePresence } from 'framer-motion';
+import { Mail, ChevronRight, MapPin, Phone, Download, Award, Lightbulb, CheckCircle2, ShieldCheck, Briefcase, MessageCircle, X, Send, Bot, User } from 'lucide-react';
 import './App.css';
 
 // Enhanced Typing Effect Component for psychological impact (Primacy Effect)
@@ -39,9 +39,24 @@ const TypingEffect = ({ words }: { words: string[] }) => {
   );
 };
 
+// Chatbot Types
+type Message = {
+  id: number;
+  text: string;
+  sender: 'bot' | 'user';
+};
+
 function App() {
   const [isLightOn, setIsLightOn] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  // Chatbot States
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatInput, setChatInput] = useState('');
+  const [messages, setMessages] = useState<Message[]>([
+    { id: 1, text: "Hello! Thank you for visiting my website. I am Vijesh's Virtual Assistant. How can I help you today? You can ask me about his experience, skills, or contact details.", sender: 'bot' }
+  ]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Psychological triggers (Authority & Social Proof)
   const skills = [
@@ -61,8 +76,51 @@ function App() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  // Auto-scroll chat to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isChatOpen]);
+
   const toggleLight = () => {
     setIsLightOn(!isLightOn);
+  };
+
+  // Smart Assistant Logic
+  const generateBotResponse = (input: string) => {
+    const lowerInput = input.toLowerCase();
+    
+    if (lowerInput.includes("experience") || lowerInput.includes("work") || lowerInput.includes("job") || lowerInput.includes("background")) {
+      return "Vijesh has over 15 years of solid experience in Banking and NBFCs. He has proven leadership skills, having worked as a Team Leader at Conneqt Business Solutions and as an Assistant Manager at Manappuram Finance Ltd.";
+    }
+    if (lowerInput.includes("skill") || lowerInput.includes("expert") || lowerInput.includes("strength")) {
+      return "His key expertise includes Debt Recovery, RCU Field Investigation, Team Management, Branch Operations, and Risk & Credit Operations.";
+    }
+    if (lowerInput.includes("contact") || lowerInput.includes("phone") || lowerInput.includes("email") || lowerInput.includes("hire") || lowerInput.includes("number")) {
+      return "You can reach Vijesh directly at vijeshvip@gmail.com or call him at +91-9074348257. He is based in Kerala, India and is open to leadership roles.";
+    }
+    if (lowerInput.includes("resume") || lowerInput.includes("cv") || lowerInput.includes("download")) {
+      return "You can download his complete professional resume by clicking the 'Download Resume' button in the top section of this page!";
+    }
+    if (lowerInput.includes("hi") || lowerInput.includes("hello") || lowerInput.includes("hey")) {
+      return "Hello there! How can I assist you in learning more about Vijesh's professional profile?";
+    }
+    
+    return "Thank you for your message! For detailed business inquiries or to schedule an interview, please contact Vijesh directly at vijeshvip@gmail.com. You can also ask me about his 'experience', 'skills', or 'contact' info.";
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!chatInput.trim()) return;
+
+    const newUserMessage: Message = { id: Date.now(), text: chatInput, sender: 'user' };
+    setMessages((prev) => [...prev, newUserMessage]);
+    setChatInput('');
+
+    // Simulate thinking delay for a more natural feel
+    setTimeout(() => {
+      const botResponse: Message = { id: Date.now() + 1, text: generateBotResponse(newUserMessage.text), sender: 'bot' };
+      setMessages((prev) => [...prev, botResponse]);
+    }, 600);
   };
 
   const fadeInUp: Variants = {
@@ -86,7 +144,7 @@ function App() {
   return (
     <div className={`min-h-screen font-sans overflow-x-hidden transition-colors duration-1000 ${bgColor} ${mainTextColor} selection:bg-blue-500 selection:text-white`}>
 
-      {/* Interactive Spotlight (Cognitive Fluency - making navigation smooth and engaging) */}
+      {/* Interactive Spotlight */}
       <div
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden md:block"
         style={{
@@ -120,7 +178,7 @@ function App() {
       </div>
 
       {/* Interactive Light Switch */}
-      <div className="fixed top-0 right-8 md:right-16 z-50 flex items-start gap-4">
+      <div className="fixed top-0 right-8 md:right-16 z-40 flex items-start gap-4">
         <div className={`transform origin-top transition-all duration-1000 flex flex-col items-center ${isLightOn ? 'scale-100 opacity-100' : 'scale-90 opacity-40'}`}>
           <div className="w-1 h-12 bg-slate-700"></div>
           <div className={`p-3 rounded-full transition-all duration-700 ${isLightOn ? 'bg-yellow-200 shadow-[0_0_60px_rgba(250,204,21,1)]' : 'bg-slate-800 border border-slate-700'}`}>
@@ -146,7 +204,7 @@ function App() {
         </motion.div>
       </div>
 
-      {/* Hero Section (F-Pattern Scanning Optimization) */}
+      {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center relative px-6 pt-24 pb-12 z-10">
         <div className={`absolute top-[-10%] left-[-10%] w-96 h-96 rounded-full blur-[120px] transition-opacity duration-1000 ${isLightOn ? 'opacity-0' : 'bg-red-600/10 opacity-100'}`}></div>
         <div className={`absolute bottom-[-10%] right-[-10%] w-96 h-96 rounded-full blur-[120px] transition-opacity duration-1000 ${isLightOn ? 'opacity-0' : 'bg-blue-600/10 opacity-100'}`}></div>
@@ -154,7 +212,6 @@ function App() {
         <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12 w-full">
           
           <div className="md:w-1/2 text-center md:text-left">
-            {/* Dynamic Status Badge (Recency Effect - immediate impact) */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -201,7 +258,7 @@ function App() {
             </motion.div>
           </div>
 
-          {/* Profile Photo (Halo Effect - using premium golden/RGB borders) */}
+          {/* Profile Photo */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -218,7 +275,6 @@ function App() {
                   e.currentTarget.src = "https://ui-avatars.com/api/?name=Vijesh+PR&background=0D8ABC&color=fff&size=512";
                 }}
               />
-              {/* Trust Signal Badge */}
               <div className="absolute bottom-4 right-4 z-20 bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-3 rounded-full shadow-xl border-2 border-white transform hover:scale-110 transition-transform" title="15+ Years of Excellence">
                 <Award size={28} />
               </div>
@@ -227,7 +283,7 @@ function App() {
         </div>
       </section>
 
-      {/* Experience Section (Information Hierarchy & Chunking) */}
+      {/* Experience Section */}
       <section id="experience" className={`py-24 px-6 relative border-t transition-colors duration-1000 z-10 ${isLightOn ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/50 border-slate-800'}`}>
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -250,7 +306,6 @@ function App() {
             viewport={{ once: true, margin: "-50px" }}
             className="space-y-8"
           >
-            {/* Managerial Role 1 */}
             <motion.div variants={fadeInUp} className={`group relative p-8 md:p-10 rounded-2xl border transition-all duration-500 overflow-hidden ${isLightOn ? 'bg-white border-slate-200 hover:border-blue-500 hover:shadow-2xl' : 'bg-slate-800/40 border-slate-700 hover:border-blue-500/50 hover:bg-slate-800/60'}`}>
               <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
@@ -269,7 +324,6 @@ function App() {
               </ul>
             </motion.div>
 
-            {/* Managerial Role 2 */}
             <motion.div variants={fadeInUp} className={`group relative p-8 md:p-10 rounded-2xl border transition-all duration-500 overflow-hidden ${isLightOn ? 'bg-white border-slate-200 hover:border-green-500 hover:shadow-2xl' : 'bg-slate-800/40 border-slate-700 hover:border-green-500/50 hover:bg-slate-800/60'}`}>
               <div className="absolute top-0 left-0 w-1.5 h-full bg-green-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
@@ -288,7 +342,6 @@ function App() {
               </ul>
             </motion.div>
 
-            {/* Role 3 */}
             <motion.div variants={fadeInUp} className={`group relative p-8 md:p-10 rounded-2xl border transition-all duration-500 overflow-hidden ${isLightOn ? 'bg-white border-slate-200 hover:border-red-500 hover:shadow-2xl' : 'bg-slate-800/40 border-slate-700 hover:border-red-500/50 hover:bg-slate-800/60'}`}>
               <div className="absolute top-0 left-0 w-1.5 h-full bg-red-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
@@ -304,7 +357,6 @@ function App() {
               </ul>
             </motion.div>
 
-            {/* Role 4 */}
             <motion.div variants={fadeInUp} className={`group relative p-8 md:p-10 rounded-2xl border transition-all duration-500 overflow-hidden ${isLightOn ? 'bg-white border-slate-200 hover:border-indigo-500 hover:shadow-2xl' : 'bg-slate-800/40 border-slate-700 hover:border-indigo-500/50 hover:bg-slate-800/60'}`}>
               <div className="absolute top-0 left-0 w-1.5 h-full bg-indigo-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
@@ -323,7 +375,7 @@ function App() {
         </div>
       </section>
 
-      {/* Contact Section (Peak-End Rule - leaving a strong final impression) */}
+      {/* Contact Section */}
       <section id="contact" className="py-32 px-6 relative overflow-hidden z-10">
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -362,6 +414,83 @@ function App() {
       <footer className={`py-10 text-center border-t transition-colors duration-1000 relative z-10 ${isLightOn ? 'bg-slate-100 border-slate-200 text-slate-600' : 'bg-[#050810] border-slate-800 text-slate-400'}`}>
         <p className="font-medium">© {new Date().getFullYear()} Vijesh PR. All rights reserved.</p>
       </footer>
+
+      {/* --- SMART AI ASSISTANT CHATBOT UI --- */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        
+        <AnimatePresence>
+          {isChatOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className={`mb-4 w-80 sm:w-96 rounded-2xl shadow-2xl flex flex-col overflow-hidden border ${isLightOn ? 'bg-white border-slate-200' : 'bg-slate-900 border-slate-700'}`}
+              style={{ height: '450px' }}
+            >
+              {/* Chat Header */}
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 flex items-center justify-between text-white">
+                <div className="flex items-center gap-2">
+                  <Bot size={24} />
+                  <div>
+                    <h3 className="font-bold text-sm">Vijesh's Assistant</h3>
+                    <p className="text-xs text-blue-100 opacity-90">Always online</p>
+                  </div>
+                </div>
+                <button onClick={() => setIsChatOpen(false)} className="hover:bg-white/20 p-1 rounded-md transition-colors">
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Chat Messages Body */}
+              <div className={`flex-1 p-4 overflow-y-auto flex flex-col gap-4 ${isLightOn ? 'bg-slate-50' : 'bg-slate-800/50'}`}>
+                {messages.map((msg) => (
+                  <div key={msg.id} className={`flex gap-2 max-w-[85%] ${msg.sender === 'user' ? 'self-end flex-row-reverse' : 'self-start'}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.sender === 'user' ? 'bg-blue-500' : 'bg-indigo-500'}`}>
+                      {msg.sender === 'user' ? <User size={16} className="text-white" /> : <Bot size={16} className="text-white" />}
+                    </div>
+                    <div className={`p-3 rounded-2xl text-sm leading-relaxed ${msg.sender === 'user' ? 'bg-blue-600 text-white rounded-tr-sm' : isLightOn ? 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm shadow-sm' : 'bg-slate-700 text-slate-200 rounded-tl-sm'}`}>
+                      {msg.text}
+                    </div>
+                  </div>
+                ))}
+                <div ref={messagesEndRef} />
+              </div>
+
+              {/* Chat Input */}
+              <form onSubmit={handleSendMessage} className={`p-3 border-t flex gap-2 ${isLightOn ? 'bg-white border-slate-200' : 'bg-slate-900 border-slate-700'}`}>
+                <input
+                  type="text"
+                  value={chatInput}
+                  onChange={(e) => setChatInput(e.target.value)}
+                  placeholder="Ask about Vijesh's experience..."
+                  className={`flex-1 px-3 py-2 rounded-xl text-sm outline-none border transition-colors ${isLightOn ? 'bg-slate-100 border-transparent focus:border-blue-400 text-slate-800' : 'bg-slate-800 border-slate-600 focus:border-blue-500 text-slate-100'}`}
+                />
+                <button 
+                  type="submit" 
+                  disabled={!chatInput.trim()}
+                  className={`p-2 rounded-xl text-white transition-colors flex items-center justify-center ${chatInput.trim() ? 'bg-blue-600 hover:bg-blue-700' : 'bg-slate-400 cursor-not-allowed'}`}
+                >
+                  <Send size={18} />
+                </button>
+              </form>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Floating Chat Button */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setIsChatOpen(!isChatOpen)}
+          className={`w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all hover:shadow-[0_0_25px_rgba(79,70,229,0.6)] ${isChatOpen ? 'rotate-90' : 'rotate-0'}`}
+          style={{ transitionDuration: '0.3s' }}
+        >
+          {isChatOpen ? <X size={28} /> : <MessageCircle size={28} />}
+        </motion.button>
+
+      </div>
+
     </div>
   );
 }
