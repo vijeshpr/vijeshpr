@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
 import { Mail, ChevronRight, MapPin, Phone, Download, Award, Lightbulb, CheckCircle2, ShieldCheck, Briefcase, MessageCircle, X, Send, Bot, User } from 'lucide-react';
 import './App.css';
 
-// Enhanced Typing Effect Component for psychological impact (Primacy Effect)
+// Enhanced Typing Effect Component
 const TypingEffect = ({ words }: { words: string[] }) => {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
@@ -58,7 +58,6 @@ function App() {
   ]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Psychological triggers (Authority & Social Proof)
   const skills = [
     "15+ Years Experience in Banking",
     "Expert in Debt Recovery",
@@ -116,7 +115,7 @@ function App() {
     setMessages((prev) => [...prev, newUserMessage]);
     setChatInput('');
 
-    // Simulate thinking delay for a more natural feel
+    // Simulate thinking delay
     setTimeout(() => {
       const botResponse: Message = { id: Date.now() + 1, text: generateBotResponse(newUserMessage.text), sender: 'bot' };
       setMessages((prev) => [...prev, botResponse]);
@@ -136,7 +135,7 @@ function App() {
     }
   };
 
-  // Fixed text colors to bypass browser CSS overrides
+  // Fixed text colors
   const mainTextColor = isLightOn ? 'text-[#0f172a]' : 'text-white';
   const subTextColor = isLightOn ? 'text-[#334155]' : 'text-slate-300';
   const bgColor = isLightOn ? 'bg-[#f8fafc]' : 'bg-[#0a0f1a]';
@@ -415,7 +414,7 @@ function App() {
         <p className="font-medium">© {new Date().getFullYear()} Vijesh PR. All rights reserved.</p>
       </footer>
 
-      {/* --- SMART AI ASSISTANT CHATBOT UI --- */}
+      {/* --- SMART AI ASSISTANT CHATBOT UI WITH GLASSMORPHISM --- */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
         
         <AnimatePresence>
@@ -424,32 +423,37 @@ function App() {
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              className={`mb-4 w-80 sm:w-96 rounded-2xl shadow-2xl flex flex-col overflow-hidden border ${isLightOn ? 'bg-white border-slate-200' : 'bg-slate-900 border-slate-700'}`}
-              style={{ height: '450px' }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className={`mb-4 w-80 sm:w-[400px] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border backdrop-blur-2xl transition-colors duration-500 ${isLightOn ? 'bg-white/70 border-white/60 shadow-blue-900/10' : 'bg-slate-900/70 border-slate-700/50 shadow-black/50'}`}
+              style={{ height: '480px' }}
             >
               {/* Chat Header */}
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 flex items-center justify-between text-white">
-                <div className="flex items-center gap-2">
-                  <Bot size={24} />
+              <div className="bg-gradient-to-r from-blue-600/90 to-indigo-600/90 backdrop-blur-md p-5 flex items-center justify-between text-white border-b border-white/10 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <div className="bg-white/20 p-2 rounded-full backdrop-blur-sm">
+                    <Bot size={24} />
+                  </div>
                   <div>
-                    <h3 className="font-bold text-sm">Vijesh's Assistant</h3>
-                    <p className="text-xs text-blue-100 opacity-90">Always online</p>
+                    <h3 className="font-bold text-base tracking-wide">Vijesh's Assistant</h3>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                      <p className="text-xs text-blue-50 opacity-90 font-medium">Online & Ready</p>
+                    </div>
                   </div>
                 </div>
-                <button onClick={() => setIsChatOpen(false)} className="hover:bg-white/20 p-1 rounded-md transition-colors">
+                <button onClick={() => setIsChatOpen(false)} className="hover:bg-white/20 p-2 rounded-full transition-colors">
                   <X size={20} />
                 </button>
               </div>
 
               {/* Chat Messages Body */}
-              <div className={`flex-1 p-4 overflow-y-auto flex flex-col gap-4 ${isLightOn ? 'bg-slate-50' : 'bg-slate-800/50'}`}>
+              <div className="flex-1 p-5 overflow-y-auto flex flex-col gap-5 bg-transparent custom-scrollbar">
                 {messages.map((msg) => (
-                  <div key={msg.id} className={`flex gap-2 max-w-[85%] ${msg.sender === 'user' ? 'self-end flex-row-reverse' : 'self-start'}`}>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.sender === 'user' ? 'bg-blue-500' : 'bg-indigo-500'}`}>
-                      {msg.sender === 'user' ? <User size={16} className="text-white" /> : <Bot size={16} className="text-white" />}
+                  <div key={msg.id} className={`flex gap-3 max-w-[85%] ${msg.sender === 'user' ? 'self-end flex-row-reverse' : 'self-start'}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 shadow-md ${msg.sender === 'user' ? 'bg-blue-600' : 'bg-indigo-600'}`}>
+                      {msg.sender === 'user' ? <User size={14} className="text-white" /> : <Bot size={14} className="text-white" />}
                     </div>
-                    <div className={`p-3 rounded-2xl text-sm leading-relaxed ${msg.sender === 'user' ? 'bg-blue-600 text-white rounded-tr-sm' : isLightOn ? 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm shadow-sm' : 'bg-slate-700 text-slate-200 rounded-tl-sm'}`}>
+                    <div className={`p-3.5 text-sm leading-relaxed shadow-sm font-medium ${msg.sender === 'user' ? 'bg-blue-600 text-white rounded-2xl rounded-tr-sm' : isLightOn ? 'bg-white/90 border border-slate-200/50 text-slate-800 rounded-2xl rounded-tl-sm' : 'bg-slate-800/90 border border-slate-600/50 text-slate-100 rounded-2xl rounded-tl-sm'}`}>
                       {msg.text}
                     </div>
                   </div>
@@ -457,21 +461,25 @@ function App() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Chat Input */}
-              <form onSubmit={handleSendMessage} className={`p-3 border-t flex gap-2 ${isLightOn ? 'bg-white border-slate-200' : 'bg-slate-900 border-slate-700'}`}>
+              {/* Stylish Chat Input */}
+              <form onSubmit={handleSendMessage} className={`p-4 border-t flex gap-3 bg-transparent ${isLightOn ? 'border-slate-200/50' : 'border-slate-700/50'}`}>
                 <input
                   type="text"
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
-                  placeholder="Ask about Vijesh's experience..."
-                  className={`flex-1 px-3 py-2 rounded-xl text-sm outline-none border transition-colors ${isLightOn ? 'bg-slate-100 border-transparent focus:border-blue-400 text-slate-800' : 'bg-slate-800 border-slate-600 focus:border-blue-500 text-slate-100'}`}
+                  placeholder="Ask me anything..."
+                  className={`flex-1 px-4 py-3 rounded-full text-sm outline-none border transition-all duration-300 shadow-inner ${
+                    isLightOn 
+                      ? 'bg-white/60 border-slate-300/80 text-black placeholder-slate-500 focus:bg-white focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10' 
+                      : 'bg-slate-800/60 border-slate-600/80 text-white placeholder-slate-400 focus:bg-slate-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20'
+                  }`}
                 />
                 <button 
                   type="submit" 
                   disabled={!chatInput.trim()}
-                  className={`p-2 rounded-xl text-white transition-colors flex items-center justify-center ${chatInput.trim() ? 'bg-blue-600 hover:bg-blue-700' : 'bg-slate-400 cursor-not-allowed'}`}
+                  className={`w-11 h-11 rounded-full text-white transition-all duration-300 flex items-center justify-center shadow-md flex-shrink-0 ${chatInput.trim() ? 'bg-blue-600 hover:bg-blue-700 hover:scale-105' : 'bg-slate-400/50 cursor-not-allowed opacity-70'}`}
                 >
-                  <Send size={18} />
+                  <Send size={18} className={chatInput.trim() ? "ml-1" : ""} />
                 </button>
               </form>
             </motion.div>
@@ -483,10 +491,10 @@ function App() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsChatOpen(!isChatOpen)}
-          className={`w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all hover:shadow-[0_0_25px_rgba(79,70,229,0.6)] ${isChatOpen ? 'rotate-90' : 'rotate-0'}`}
+          className={`w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] ${isChatOpen ? 'rotate-90' : 'rotate-0'}`}
           style={{ transitionDuration: '0.3s' }}
         >
-          {isChatOpen ? <X size={28} /> : <MessageCircle size={28} />}
+          {isChatOpen ? <X size={30} /> : <MessageCircle size={30} />}
         </motion.button>
 
       </div>
