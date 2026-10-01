@@ -3,7 +3,7 @@ import { motion, Variants, AnimatePresence } from 'framer-motion';
 import { Mail, ChevronRight, MapPin, Phone, Download, Award, Lightbulb, CheckCircle2, ShieldCheck, Briefcase, MessageCircle, X, Send, Bot, User } from 'lucide-react';
 import './App.css';
 
-// Enhanced Typing Effect Component
+// Enhanced Typing Effect Component for psychological impact (Primacy Effect)
 const TypingEffect = ({ words }: { words: string[] }) => {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
@@ -58,6 +58,7 @@ function App() {
   ]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Psychological triggers (Authority & Social Proof)
   const skills = [
     "15+ Years Experience in Banking",
     "Expert in Debt Recovery",
@@ -115,7 +116,7 @@ function App() {
     setMessages((prev) => [...prev, newUserMessage]);
     setChatInput('');
 
-    // Simulate thinking delay
+    // Simulate thinking delay for a more natural feel
     setTimeout(() => {
       const botResponse: Message = { id: Date.now() + 1, text: generateBotResponse(newUserMessage.text), sender: 'bot' };
       setMessages((prev) => [...prev, botResponse]);
@@ -135,7 +136,7 @@ function App() {
     }
   };
 
-  // Fixed text colors
+  // Fixed text colors to bypass browser CSS overrides
   const mainTextColor = isLightOn ? 'text-[#0f172a]' : 'text-white';
   const subTextColor = isLightOn ? 'text-[#334155]' : 'text-slate-300';
   const bgColor = isLightOn ? 'bg-[#f8fafc]' : 'bg-[#0a0f1a]';
@@ -143,7 +144,7 @@ function App() {
   return (
     <div className={`min-h-screen font-sans overflow-x-hidden transition-colors duration-1000 ${bgColor} ${mainTextColor} selection:bg-blue-500 selection:text-white`}>
 
-      {/* Interactive Spotlight */}
+      {/* Interactive Spotlight (Cognitive Fluency - making navigation smooth and engaging) */}
       <div
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden md:block"
         style={{
@@ -203,7 +204,7 @@ function App() {
         </motion.div>
       </div>
 
-      {/* Hero Section */}
+      {/* Hero Section (F-Pattern Scanning Optimization) */}
       <section className="min-h-screen flex items-center justify-center relative px-6 pt-24 pb-12 z-10">
         <div className={`absolute top-[-10%] left-[-10%] w-96 h-96 rounded-full blur-[120px] transition-opacity duration-1000 ${isLightOn ? 'opacity-0' : 'bg-red-600/10 opacity-100'}`}></div>
         <div className={`absolute bottom-[-10%] right-[-10%] w-96 h-96 rounded-full blur-[120px] transition-opacity duration-1000 ${isLightOn ? 'opacity-0' : 'bg-blue-600/10 opacity-100'}`}></div>
@@ -211,6 +212,7 @@ function App() {
         <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12 w-full">
           
           <div className="md:w-1/2 text-center md:text-left">
+            {/* Dynamic Status Badge (Recency Effect - immediate impact) */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -257,7 +259,7 @@ function App() {
             </motion.div>
           </div>
 
-          {/* Profile Photo */}
+          {/* Profile Photo (Halo Effect - using premium golden/RGB borders) */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -274,6 +276,7 @@ function App() {
                   e.currentTarget.src = "https://ui-avatars.com/api/?name=Vijesh+PR&background=0D8ABC&color=fff&size=512";
                 }}
               />
+              {/* Trust Signal Badge */}
               <div className="absolute bottom-4 right-4 z-20 bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-3 rounded-full shadow-xl border-2 border-white transform hover:scale-110 transition-transform" title="15+ Years of Excellence">
                 <Award size={28} />
               </div>
@@ -282,7 +285,7 @@ function App() {
         </div>
       </section>
 
-      {/* Experience Section */}
+      {/* Experience Section (Information Hierarchy & Chunking) */}
       <section id="experience" className={`py-24 px-6 relative border-t transition-colors duration-1000 z-10 ${isLightOn ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/50 border-slate-800'}`}>
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -305,6 +308,7 @@ function App() {
             viewport={{ once: true, margin: "-50px" }}
             className="space-y-8"
           >
+            {/* Managerial Role 1 */}
             <motion.div variants={fadeInUp} className={`group relative p-8 md:p-10 rounded-2xl border transition-all duration-500 overflow-hidden ${isLightOn ? 'bg-white border-slate-200 hover:border-blue-500 hover:shadow-2xl' : 'bg-slate-800/40 border-slate-700 hover:border-blue-500/50 hover:bg-slate-800/60'}`}>
               <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
@@ -323,6 +327,7 @@ function App() {
               </ul>
             </motion.div>
 
+            {/* Managerial Role 2 */}
             <motion.div variants={fadeInUp} className={`group relative p-8 md:p-10 rounded-2xl border transition-all duration-500 overflow-hidden ${isLightOn ? 'bg-white border-slate-200 hover:border-green-500 hover:shadow-2xl' : 'bg-slate-800/40 border-slate-700 hover:border-green-500/50 hover:bg-slate-800/60'}`}>
               <div className="absolute top-0 left-0 w-1.5 h-full bg-green-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
@@ -341,6 +346,7 @@ function App() {
               </ul>
             </motion.div>
 
+            {/* Role 3 */}
             <motion.div variants={fadeInUp} className={`group relative p-8 md:p-10 rounded-2xl border transition-all duration-500 overflow-hidden ${isLightOn ? 'bg-white border-slate-200 hover:border-red-500 hover:shadow-2xl' : 'bg-slate-800/40 border-slate-700 hover:border-red-500/50 hover:bg-slate-800/60'}`}>
               <div className="absolute top-0 left-0 w-1.5 h-full bg-red-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
@@ -356,6 +362,7 @@ function App() {
               </ul>
             </motion.div>
 
+            {/* Role 4 */}
             <motion.div variants={fadeInUp} className={`group relative p-8 md:p-10 rounded-2xl border transition-all duration-500 overflow-hidden ${isLightOn ? 'bg-white border-slate-200 hover:border-indigo-500 hover:shadow-2xl' : 'bg-slate-800/40 border-slate-700 hover:border-indigo-500/50 hover:bg-slate-800/60'}`}>
               <div className="absolute top-0 left-0 w-1.5 h-full bg-indigo-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
@@ -374,7 +381,7 @@ function App() {
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Contact Section (Peak-End Rule - leaving a strong final impression) */}
       <section id="contact" className="py-32 px-6 relative overflow-hidden z-10">
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -461,17 +468,17 @@ function App() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Stylish Chat Input */}
+              {/* Stylish Solid Chat Input to fix visibility issue */}
               <form onSubmit={handleSendMessage} className={`p-4 border-t flex gap-3 bg-transparent ${isLightOn ? 'border-slate-200/50' : 'border-slate-700/50'}`}>
                 <input
                   type="text"
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   placeholder="Ask me anything..."
-                  className={`flex-1 px-4 py-3 rounded-full text-sm outline-none border transition-all duration-300 shadow-inner ${
+                  className={`flex-1 px-4 py-3 rounded-full text-sm font-medium outline-none border transition-all duration-300 ${
                     isLightOn 
-                      ? 'bg-white/60 border-slate-300/80 text-black placeholder-slate-500 focus:bg-white focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10' 
-                      : 'bg-slate-800/60 border-slate-600/80 text-white placeholder-slate-400 focus:bg-slate-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20'
+                      ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20' 
+                      : 'bg-slate-800 border-slate-600 text-white placeholder-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40'
                   }`}
                 />
                 <button 
