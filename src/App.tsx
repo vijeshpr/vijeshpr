@@ -468,17 +468,21 @@ function App() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Stylish Solid Chat Input to fix visibility issue */}
+              {/* Fixed Solid Chat Input */}
               <form onSubmit={handleSendMessage} className={`p-4 border-t flex gap-3 bg-transparent ${isLightOn ? 'border-slate-200/50' : 'border-slate-700/50'}`}>
                 <input
                   type="text"
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   placeholder="Ask me anything..."
-                  className={`flex-1 px-4 py-3 rounded-full text-sm font-medium outline-none border transition-all duration-300 ${
+                  style={{ 
+                    color: isLightOn ? '#000000' : '#ffffff',
+                    backgroundColor: isLightOn ? '#ffffff' : '#1e293b'
+                  }}
+                  className={`flex-1 px-4 py-3 rounded-full text-sm font-bold outline-none border transition-all duration-300 ${
                     isLightOn 
-                      ? 'bg-white border-slate-300 text-slate-900 placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20' 
-                      : 'bg-slate-800 border-slate-600 text-white placeholder-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40'
+                      ? 'border-slate-300 placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20' 
+                      : 'border-slate-600 placeholder-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40'
                   }`}
                 />
                 <button 
